@@ -1,0 +1,6 @@
+target
+.*.swp
+.idea
+.bsp
+project/target
+project/project/target
