@@ -12,7 +12,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
-class WithRetrySupportTest extends AnyWordSpecLike with Matchers {
+class RetrySupportTest extends AnyWordSpecLike with Matchers {
 
   implicit val timer: Timer[IO] = IO.timer(ExecutionContext.fromExecutor(Executors.newFixedThreadPool(4)))
   val retryConfig: RetryConfig =
@@ -23,7 +23,7 @@ class WithRetrySupportTest extends AnyWordSpecLike with Matchers {
       1.1
     )
 
-  class RetryTester extends WithRetrySupport[IO] {
+  class RetryTester extends RetrySupport[IO] {
     private val counter: AtomicInteger = new AtomicInteger(0)
 
     def failingFn(): IO[Int] = {

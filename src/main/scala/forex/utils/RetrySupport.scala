@@ -5,7 +5,7 @@ import cats.implicits._
 import cats.{ApplicativeError, Defer, MonadError}
 import forex.config.RetryConfig
 
-trait WithRetrySupport[F[_]] {
+trait RetrySupport[F[_]] {
   private def loop[A, S](fa: F[A], initial: S)(
       f: (Throwable, S, S => F[A]) => F[A]
   )(implicit F: ApplicativeError[F, Throwable], D: Defer[F]): F[A] = {
