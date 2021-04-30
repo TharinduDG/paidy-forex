@@ -22,7 +22,7 @@ object Currency extends Enum[Currency] with CirceEnum[Currency] {
 
   override def values: IndexedSeq[Currency] = findValues
 
-  val allPairs: List[(Currency, Currency)] = {
+  val combinations: List[(Currency, Currency)] = {
     values
       .combinations(2)
       .flatMap(_.permutations)

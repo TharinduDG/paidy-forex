@@ -14,16 +14,17 @@ object Main extends IOApp {
 
 }
 
-class Application[F[_]: ConcurrentEffect: Timer] {
+class Application[F[_] : ConcurrentEffect : Timer] {
 
   def stream(ec: ExecutionContext): Stream[F, Unit] =
     for {
-      config <- Config.stream("app")
+      config <- Config.stream("paidy-forex")
       module = new Module[F](config)
       _ <- BlazeServerBuilder[F](ec)
-            .bindHttp(config.http.port, config.http.host)
-            .withHttpApp(module.httpApp)
-            .serve
+        .bindHttp(config.http.port, config.http.host)
+        .withHttpApp(module.httpApp)
+        .serve
+        .concurrently(module.ratesRefreshScheduler)
     } yield ()
 
 }
